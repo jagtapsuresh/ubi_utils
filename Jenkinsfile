@@ -9,7 +9,7 @@ node {
       
    }
    stage('checkout') { 
-      git 'https://github.com/jagtapsuresh/jboss.git'
+      git 'https://github.com/jagtapsuresh/ubi_utils.git'
       
    }
    
