@@ -3,8 +3,8 @@ node {
    stage('Pre-req-display') { 
       sh """
       echo "Running this on Openshift Platform" 
-      echo "Expecting you to have surjagta001-Dev project in OCP" 
-      echo "Jenkins Service-account should have privilages to do change on surjagta001-Dev project" 
+      echo "Expecting you to have surjagta001-dev project in OCP" 
+      echo "Jenkins Service-account should have privilages to do change on surjagta001-dev project" 
       """
       
    }
