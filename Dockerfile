@@ -1,11 +1,12 @@
 FROM registry.access.redhat.com/ubi8/ubi-minimal:latest
+
 MAINTAINER Redhat [ppadmana@redhat.com]
 
 #Adding env details
 ENV FIS_JAVA_IMAGE_NAME="jboss-fuse/minimal-fuse-openshift" \
 FIS_JAVA_IMAGE_VERSION="7.7-98" \
 PATH=$PATH:"/usr/local/s2i" \
-JAVA_DATA_DIR="/jboss-fuse/deploy/data"
+JAVA_DATA_DIR="/deployments/data"
 
 # BASE version information
 LABEL name="$FIS_JAVA_IMAGE_NAME" \
@@ -19,7 +20,7 @@ io.k8s.display-name="Fuse Integration Services - Java" \
 io.openshift.tags="builder,java" \
 io.openshift.s2i.scripts-url="image:///usr/local/s2i" \
 io.openshift.s2i.destination="/tmp" \
-org.jboss.deployments-dir="/jboss-fuser/deployments" \
+org.jboss.deployments-dir="/deployments" \
 description="Fuse Base Image With minimal UBI" \
 group="ubi-minimal"
 
@@ -27,7 +28,6 @@ USER root
 ADD run-java/ /opt/run-java
 ADD s2i/ /usr/local/s2i
 ADD jolokia /opt/jolokia/
-ADD fuse /jboss-fuse/
 
 
 #install OpenJDK 1.8 / use only when getting ubi minimal image
@@ -38,14 +38,13 @@ RUN microdnf install shadow-utils java-1.8.0-openjdk-headless \
 && useradd -r jboss \
 && usermod -g root -G jboss jboss \
 && chmod -R 755 /opt/run-java ; chmod -R 755 /usr/local/s2i \
-&& chmod -R 775 /jboss-fuse \
-&& chmod -R "g+rwX" /jboss-fuse \
-&& chown -R jboss:root /jboss-fuse \
+&& mkdir -p /deployments/data \
+&& chmod -R "g+rwX" /deployments \
+&& chown -R jboss:root /deployments \
 && chmod 444 /opt/jolokia/jolokia.jar \
 && chmod 755 /opt/jolokia/jolokia-opts \
 && chmod 775 /opt/jolokia/etc \
 && chgrp root /opt/jolokia/etc
-
 
 #fis user
 USER 185
