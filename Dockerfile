@@ -34,7 +34,7 @@ ADD jolokia /opt/jolokia/
 # Install openjdk 1.8
 RUN microdnf install shadow-utils java-1.8.0-openjdk-headless \
 && microdnf clean all \
-&& echo securerandom.source=file:/dev/urandom >> /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.el8_4.x86_64/jre/lib/security/java.security \
+&& echo securerandom.source=file:/dev/urandom >> && echo securerandom.source=file:/dev/urandom >>/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.312.b07-1.el8_4.x86_64/jre/lib/security/java.security/jre/lib/security/java.security \
 && useradd -r jboss \
 && usermod -g root -G jboss jboss \
 && chmod -R 755 /opt/run-java ; chmod -R 755 /usr/local/s2i \
